@@ -2,13 +2,12 @@ package main
 
 import (
 	_ "vuejs-blog-server/routers"
+	_ "vuejs-blog-server/conf"
 
 	"github.com/astaxie/beego"
-	"fmt"
 )
 
 func main() {
-	fmt.Println(beego.BConfig)
 	if beego.BConfig.RunMode == "dev" {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
