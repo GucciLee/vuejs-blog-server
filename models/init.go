@@ -1,8 +1,8 @@
 package models
 
 import (
-		"github.com/astaxie/beego/orm"
-		_ "github.com/go-sql-driver/mysql"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 	"fmt"
 	"vuejs-blog-server/conf"
 	"github.com/astaxie/beego"
@@ -29,9 +29,9 @@ func init()  {
 
 	// create table
 	// @params name default 代表mysql数据库
-	// @params force 打印更多信息
-	// @params verbose 强制创建表
-	orm.RunSyncdb("default", true, true)
+	// @params force 强制创建表
+	// @params verbose 打印更多信息
+	orm.RunSyncdb("default", false, true)
 
 	// 调试模式
 	if beego.BConfig.RunMode == "dev" {
