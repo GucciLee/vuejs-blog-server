@@ -1,15 +1,13 @@
 package conf
 
 import (
-	"os"
 	"vuejs-blog-server/utils/filepath"
 	"github.com/astaxie/beego/config"
 	"github.com/astaxie/beego"
 )
-func exists(name string) bool {
-	_, err := os.Stat(name)
-	return err == nil
-}
+
+// conf.EnvConfig.String("")
+var EnvConfig config.Configer
 
 func init()  {
 	var env string = "conf/env.conf"
@@ -22,9 +20,9 @@ func init()  {
 	}
 
 	// 读取 env 配置文件
-	envConf, err := config.NewConfig("ini", env)
+	var err error
+	EnvConfig, err = config.NewConfig("ini", env)
 	if err != nil {
 		beego.Error(err)
 	}
-	beego.Warn(envConf.String("mysql::username"))
 }

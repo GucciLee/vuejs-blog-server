@@ -3,12 +3,25 @@ package models
 import (
 		"github.com/astaxie/beego/orm"
 		_ "github.com/go-sql-driver/mysql"
-	)
+	"fmt"
+	"vuejs-blog-server/conf"
+	"github.com/astaxie/beego"
+)
 
 func init()  {
+	// 获取 env::mysql 配置信息
+	mysql := map[string]string{
+		"username": conf.EnvConfig.String("mysql::username"),
+		"password": conf.EnvConfig.String("mysql::password"),
+		"tcp": conf.EnvConfig.String("mysql::tcp"),
+		"dbname": conf.EnvConfig.String("mysql::dbname"),
+		"charset": conf.EnvConfig.String("mysql::charset"),
+	}
+
 	// set default database
 	// 连接数据库
-	orm.RegisterDataBase("default", "mysql", "root:root@tcp(127.0.0.1:3306)/vuejs_blog_server?charset=utf8", 30)
+	dataSource := fmt.Sprintf("%v:%v@tcp(%v)/%v?charset=%v", mysql["username"], mysql["password"], mysql["tcp"], mysql["dbname"], mysql["charset"])
+	orm.RegisterDataBase("default", "mysql", dataSource, 30)
 
 	// register model
 	// 在表不存在的时候会创建表
@@ -19,4 +32,10 @@ func init()  {
 	// @params force 打印更多信息
 	// @params verbose 强制创建表
 	orm.RunSyncdb("default", true, true)
+
+	// 调试模式
+	if beego.BConfig.RunMode == "dev" {
+		// 打印查询语句
+		orm.Debug = true
+	}
 }

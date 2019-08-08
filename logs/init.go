@@ -12,10 +12,13 @@ func init(){
 
 	// 设置日志文件
 	beego.SetLogger("file", `{"filename":"logs/logs.log"}`)
+
 	// 只输出到文件
 	beego.BeeLogger.DelLogger("console")
+
 	// 设置级别
-	beego.SetLevel(beego.LevelNotice)
+	// beego.SetLevel(beego.LevelNotice)
+
 	// 输出文件名和行号
 	beego.SetLogFuncCall(true)
 }

@@ -1,4 +1,4 @@
-package controllers
+package example
 
 // Restful 接口
 type RestfulController interface {

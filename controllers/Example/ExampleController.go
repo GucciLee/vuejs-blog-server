@@ -1,4 +1,4 @@
-package controllers
+package example
 
 import "github.com/astaxie/beego"
 
