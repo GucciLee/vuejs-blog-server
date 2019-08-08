@@ -13,3 +13,6 @@
 
 # conf
 /conf/env.conf
+
+# logs
+/logs/*.log
