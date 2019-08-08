@@ -8,6 +8,7 @@ import (
 
 	"github.com/astaxie/beego/orm"
 	"time"
+	"vuejs-blog-server/request"
 )
 
 type Users struct {
@@ -15,9 +16,9 @@ type Users struct {
 	Name string `orm:"size(255);unique;description(用户名)"`
 	Email    string `orm:"size(255);unique;description(邮箱)"`
 	Password string `orm:"size(255);description(密码)"`
-	Remember_token string `orm:"size(100);description(记住)"`
+	RememberToken string `orm:"size(100);description(记住)" json:"remember_token"`
 	Avatar   string `orm:"size(255);description(头像)"`
-	NotificationCount  int64 `orm:"default(0);description(待通知消息条数)"`
+	NotificationCount  int64 `orm:"default(0);description(待通知消息条数)" json:"notification_count"`
 	CreatedAt time.Time `orm:"auto_now_add;type(datetime);description(创建时间)"`
 	UpdatedAt time.Time `orm:"auto_now;type(datetime);description(更新时间)"`
 }
@@ -25,8 +26,21 @@ type Users struct {
 // AddUsers insert a new Users into database and returns
 // last inserted Id on success.
 func AddUsers(m *Users) (id int64, err error) {
-	o := orm.NewOrm()
-	id, err = o.Insert(m)
+	// valid := validation.Validation{}
+	valid2 := request.Users{*m}
+	valid2.Go()
+	// valid.Required(m.Name, "用户名").Message("名称不能为空")
+	/*valid.Required(m.Name, "用户名")
+	if valid.HasErrors() {
+		// 如果有错误信息，证明验证没通过
+		// 打印错误信息
+		for _, err := range valid.Errors {
+			log.Println(err.Key, err.Message)
+		}
+	}
+	fmt.Println("通过？")*/
+	// o := orm.NewOrm()
+	// id, err = o.Insert(m)
 	return
 }
 

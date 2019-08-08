@@ -17,7 +17,7 @@ func init(){
 	beego.BeeLogger.DelLogger("console")
 
 	// 设置级别
-	// beego.SetLevel(beego.LevelNotice)
+	beego.SetLevel(beego.LevelNotice)
 
 	// 输出文件名和行号
 	beego.SetLogFuncCall(true)

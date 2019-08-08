@@ -36,6 +36,6 @@ func init()  {
 	// 调试模式
 	if beego.BConfig.RunMode == "dev" {
 		// 打印查询语句
-		orm.Debug = true
+		// orm.Debug = true
 	}
 }
