@@ -1,26 +1,30 @@
 package conf
 
 import (
-	"github.com/astaxie/beego/config"
-	"fmt"
+	"os"
 	"vuejs-blog-server/utils/filepath"
-	"log"
+	"github.com/astaxie/beego/config"
+	"github.com/astaxie/beego"
 )
+func exists(name string) bool {
+	_, err := os.Stat(name)
+	return err == nil
+}
 
 func init()  {
 	var env string = "conf/env.conf"
 	var envExample string = "conf/env.example.conf"
-	// 如果 evn.conf 文件不存在，就创建
 
+	// 如果 evn.conf 文件不存在，就创建
 	if (!filepath.Exists(env)){
-		filepath.CopyFile(env, envExample)
+		filepath.CopyFile(envExample, env)
+		beego.Error("文件：" + env + "创建成功，请配置它已让程序正常运行。。。")
 	}
 
 	// 读取 env 配置文件
 	envConf, err := config.NewConfig("ini", env)
 	if err != nil {
-		log.Fatalln("读取 "+ env +" 文件失败")
+		beego.Error(err)
 	}
-
-	fmt.Println(envConf.String("mysql::username"))
+	beego.Warn(envConf.String("mysql::username"))
 }

@@ -3,15 +3,9 @@ package filepath
 import "os"
 
 // 判断所给路径文件/文件夹是否存在
-func Exists(path string) bool {
-	_, err := os.Stat(path)    //os.Stat获取文件信息
-	if err != nil {
-		if os.IsExist(err) {
-			return true
-		}
-		return false
-	}
-	return true
+func Exists(name string) bool {
+	_, err := os.Stat(name)
+	return err == nil
 }
 
 // 判断所给路径是否为文件夹
