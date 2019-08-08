@@ -3,9 +3,7 @@ package conf
 import (
 	"github.com/astaxie/beego/config"
 	"fmt"
-	"vuejs-blog-server/utils"
-	"io/ioutil"
-	"os"
+	"vuejs-blog-server/utils/filepath"
 	"log"
 )
 
@@ -13,19 +11,13 @@ func init()  {
 	var env string = "conf/env.conf"
 	var envExample string = "conf/env.example.conf"
 	// 如果 evn.conf 文件不存在，就创建
-	if (!utils.Exists(env)){
-		data, err := ioutil.ReadFile(envExample)
-		if err != nil {
-			log.Fatalln("读取 "+ envExample +" 文件失败")
-		}
-		err = ioutil.WriteFile(env, data, os.ModePerm)
-		if err != nil {
-			log.Fatalln("拷贝 "+ env +" 文件失败")
-		}
+
+	if (!filepath.Exists(env)){
+		filepath.CopyFile(env, envExample)
 	}
 
 	// 读取 env 配置文件
-	envConf, err := config.NewConfig("ini", "conf/env.conf")
+	envConf, err := config.NewConfig("ini", env)
 	if err != nil {
 		log.Fatalln("读取 "+ env +" 文件失败")
 	}
