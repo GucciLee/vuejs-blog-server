@@ -8,7 +8,6 @@ import (
 
 	"github.com/astaxie/beego/orm"
 	"time"
-	"vuejs-blog-server/request"
 )
 
 type Users struct {
@@ -26,21 +25,8 @@ type Users struct {
 // AddUsers insert a new Users into database and returns
 // last inserted Id on success.
 func AddUsers(m *Users) (id int64, err error) {
-	// valid := validation.Validation{}
-	valid2 := request.Users{*m}
-	valid2.Go()
-	// valid.Required(m.Name, "用户名").Message("名称不能为空")
-	/*valid.Required(m.Name, "用户名")
-	if valid.HasErrors() {
-		// 如果有错误信息，证明验证没通过
-		// 打印错误信息
-		for _, err := range valid.Errors {
-			log.Println(err.Key, err.Message)
-		}
-	}
-	fmt.Println("通过？")*/
-	// o := orm.NewOrm()
-	// id, err = o.Insert(m)
+	o := orm.NewOrm()
+	id, err = o.Insert(m)
 	return
 }
 

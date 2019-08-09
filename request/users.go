@@ -1,34 +1,15 @@
 package request
 
-import "fmt"
+import (
+	"github.com/astaxie/beego/validation"
+)
 
-type Users struct {
-	Model interface{}
+type User struct {
+	RequestBaseS
 }
 
-func (this Users) Params() map[string]string {
-	fmt.Println(this.Model)
-	return map[string]string{
-		"name": "a",
-		"email": "a@qq.com",
-	}
-}
-
-func (this Users) Rules() map[string]string {
-	return map[string]string{
-		"name": "required|min:6",
-	}
-}
-
-func (this Users) Message() map[string]string {
-	return map[string]string{
-		"name.required": "用户名不能为空",
-		"name.min": "用户名不少于6个字符",
-	}
-}
-
-func (this Users) Go() {
-	this.Params()
-	// isok := Validation{this.model}
-	// isok.Begin(this.Params(),this.Rules(),this.Message())
+func (this User) Valid(data map[string]interface{}) (map[string]string, bool) {
+	valid := validation.Validation{}
+	valid.Required(data["name"], "name").Message("名称不能为空")
+	return this.Rtn(valid)
 }

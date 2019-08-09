@@ -6,11 +6,14 @@ import (
 	"strconv"
 	"strings"
 	"vuejs-blog-server/models"
+	"vuejs-blog-server/utils/learnku_json"
+	"vuejs-blog-server/request"
 )
 
 //  UsersController operations for Users
 type UsersController struct {
 	BasesController
+	isValid bool
 }
 
 // URLMapping ...
@@ -20,6 +23,16 @@ func (c *UsersController) URLMapping() {
 	c.Mapping("GetAll", c.GetAll)
 	c.Mapping("Put", c.Put)
 	c.Mapping("Delete", c.Delete)
+}
+
+func (c *UsersController) Prepare() {
+	json2Map := learnku_json.Json2Map(c.Ctx.Input.RequestBody)
+	valid, b := request.User{}.Valid(json2Map)
+	// 验证不通过，响应错误信息
+	if !b {
+		c.Data["json"] = valid
+		c.ServeJSON()
+	}
 }
 
 // Post ...

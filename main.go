@@ -1,11 +1,7 @@
 package main
 
 import (
-	_ "vuejs-blog-server/logs"
-	_ "vuejs-blog-server/conf"
 	_ "vuejs-blog-server/routers"
-	_ "vuejs-blog-server/models"
-	_ "vuejs-blog-server/request"
 
 	"github.com/astaxie/beego"
 )
