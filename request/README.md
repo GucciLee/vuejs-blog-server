@@ -17,12 +17,17 @@ func (this User) Valid(data map[string]interface{}) (map[string]string, bool) {
 ### controller 控制器
 ```
 func (c *UsersController) Prepare() {
-	json2Map := learnku_json.Json2Map(c.Ctx.Input.RequestBody)
-	valid, b := request.User{}.Valid(json2Map)
-	// 验证不通过，响应错误信息
-	if !b {
-		c.Data["json"] = valid
-		c.ServeJSON()
+	json2Map := map[string]interface{}{}
+	b, err := learnku_json.Json2Map(c.Ctx.Input.RequestBody, &json2Map)
+	if b {
+		valid, i := request.User{}.Valid(json2Map)
+		// 验证不通过，响应错误信息
+		if !i {
+			c.Data["json"] = c.ErrorResopnse(HTTP_200, nil, valid)
+			c.ServeJSON()
+		}
+	} else {
+		beego.Error(err)
 	}
 }
 ```
