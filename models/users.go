@@ -25,8 +25,8 @@ type Users struct {
 // AddUsers insert a new Users into database and returns
 // last inserted Id on success.
 func AddUsers(m *Users) (id int64, err error) {
-	o := orm.NewOrm()
-	id, err = o.Insert(m)
+	//o := orm.NewOrm()
+	//id, err = o.Insert(m)
 	return
 }
 

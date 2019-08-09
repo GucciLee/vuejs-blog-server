@@ -13,7 +13,6 @@ import (
 //  UsersController operations for Users
 type UsersController struct {
 	BasesController
-	isValid bool
 }
 
 // URLMapping ...
@@ -27,10 +26,10 @@ func (c *UsersController) URLMapping() {
 
 func (c *UsersController) Prepare() {
 	json2Map := learnku_json.Json2Map(c.Ctx.Input.RequestBody)
-	valid, b := request.User{}.Valid(json2Map)
+	err, b := request.User{}.Valid(json2Map)
 	// 验证不通过，响应错误信息
 	if !b {
-		c.Data["json"] = valid
+		c.Data["json"] = c.ErrorResopnse(HTTP_200, nil, err)
 		c.ServeJSON()
 	}
 }

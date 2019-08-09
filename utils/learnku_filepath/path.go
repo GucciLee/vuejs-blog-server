@@ -1,4 +1,4 @@
-package filepath
+package learnku_filepath
 
 import "os"
 
