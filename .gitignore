@@ -12,6 +12,7 @@
 *.out
 
 # other
+.idea
 lastupdate.tmp
 
 # conf
