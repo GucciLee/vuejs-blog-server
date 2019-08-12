@@ -11,7 +11,7 @@ type ExampleController struct {
 // @Description 列表 - 展示
 // @Success 200 {object} models.Object
 // @router / [get]
-func (this *ExampleController) Index()  {
+func (this *ExampleController) Index() {
 	this.Ctx.WriteString("Get - 列表 - 展示")
 }
 
@@ -19,7 +19,7 @@ func (this *ExampleController) Index()  {
 // @Description 创建 - 展示
 // @Success 200 {object} models.Object
 // @router /create [get]
-func (this *ExampleController) Create()  {
+func (this *ExampleController) Create() {
 	this.Ctx.WriteString("Create - 创建 - 展示")
 }
 
@@ -29,7 +29,7 @@ func (this *ExampleController) Create()  {
 // @Success 200 {string} models.Object.Id
 // @Failure 403 body is empty
 // @router / [post]
-func (this *ExampleController) Store()  {
+func (this *ExampleController) Store() {
 	this.Ctx.WriteString("Store")
 }
 
@@ -39,7 +39,7 @@ func (this *ExampleController) Store()  {
 // @Success 200 {object} models.Object
 // @Failure 403 :id is empty
 // @router /:id [get]
-func (this *ExampleController) Show()  {
+func (this *ExampleController) Show() {
 	this.Ctx.WriteString("Show")
 }
 
@@ -50,7 +50,7 @@ func (this *ExampleController) Show()  {
 // @Success 200 {object} models.Object
 // @Failure 403 :id is empty
 // @router /:id/edit [get]
-func (this *ExampleController) Edit()  {
+func (this *ExampleController) Edit() {
 	this.Ctx.WriteString("Edit")
 }
 
@@ -61,7 +61,7 @@ func (this *ExampleController) Edit()  {
 // @Success 200 {object} models.Object
 // @Failure 403 :id is empty
 // @router /:id [put,patch]
-func (this *ExampleController) Update()  {
+func (this *ExampleController) Update() {
 	this.Ctx.WriteString("Update")
 }
 
@@ -71,6 +71,6 @@ func (this *ExampleController) Update()  {
 // @Success 200 {string} delete success!
 // @Failure 403 id is empty
 // @router /:id [delete]
-func (this *ExampleController) Destroy()  {
+func (this *ExampleController) Destroy() {
 	this.Ctx.WriteString("Destroy")
 }

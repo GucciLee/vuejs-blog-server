@@ -1,10 +1,9 @@
 package learnku_filepath
 
 import (
-	"os"
 	"io"
+	"os"
 )
-
 
 // @Title 拷贝文件
 // @Param string srcFileName 文件路径
@@ -29,7 +28,7 @@ func CopyFile(srcFileName, destFileName string) (int64, error) {
 // @return (int64, error) 复制字节数, 错误信息
 func CreateFile(src string) bool {
 	_, err := os.Create(src)
-	if err != nil  {
+	if err != nil {
 		return false
 	} else {
 		return true

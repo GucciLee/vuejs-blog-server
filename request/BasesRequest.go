@@ -8,7 +8,7 @@ type RequestBaseI interface {
 }
 
 // 表单验证基础结构体
-type RequestBaseS struct {}
+type RequestBaseS struct{}
 
 // 表单验证 - 开始校验
 func (this RequestBaseS) Valid(data map[string]interface{}) (map[string]string, bool) {
@@ -30,6 +30,3 @@ func (this RequestBaseS) Rtn(valid validation.Validation) (map[string]string, bo
 	}
 	return tmpMap, true
 }
-
-
-

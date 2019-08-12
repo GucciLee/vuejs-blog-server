@@ -1,16 +1,16 @@
 package learnku_json
 
 import (
-	"testing"
 	"log"
+	"testing"
 )
 
 type Monster struct {
-	Name string `json:"monster_name"`
-	Age int `json:"monster_age"`
+	Name     string `json:"monster_name"`
+	Age      int    `json:"monster_age"`
 	Birthday string
-	Sal float64
-	Skill string
+	Sal      float64
+	Skill    string
 }
 
 // JSON 转 Map

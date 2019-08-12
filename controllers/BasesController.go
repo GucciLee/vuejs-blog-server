@@ -5,20 +5,20 @@ import (
 )
 
 const (
-	HTTP_200 int = 200	// OK
-	HTTP_201 int = 201	// Created
-	HTTP_202 int = 202	// Accepted 认可的
-	HTTP_203 int = 203	// Non-Authoritative Information 非授权信息
-	HTTP_204 int = 204	// No Content 无内容
-	HTTP_301 int = 301	// 永久重定向
-	HTTP_302 int = 302	// 临时重定向
-	HTTP_400 int = 400	// Bad Request 无效请求
-	HTTP_401 int = 401	// Unauthorized 未授权请求
-	HTTP_403 int = 403	// Forbidden 请求被禁止
-	HTTP_404 int = 404	// Not Found 请求对象不存在
-	HTTP_405 int = 405	// Method Not Allowed 方法不允许
-	HTTP_500 int = 500	// Internal Server Error 内部服务器错误
-	HTTP_501 int = 501	// Not Implemented 未实现
+	HTTP_200 int = 200 // OK
+	HTTP_201 int = 201 // Created
+	HTTP_202 int = 202 // Accepted 认可的
+	HTTP_203 int = 203 // Non-Authoritative Information 非授权信息
+	HTTP_204 int = 204 // No Content 无内容
+	HTTP_301 int = 301 // 永久重定向
+	HTTP_302 int = 302 // 临时重定向
+	HTTP_400 int = 400 // Bad Request 无效请求
+	HTTP_401 int = 401 // Unauthorized 未授权请求
+	HTTP_403 int = 403 // Forbidden 请求被禁止
+	HTTP_404 int = 404 // Not Found 请求对象不存在
+	HTTP_405 int = 405 // Method Not Allowed 方法不允许
+	HTTP_500 int = 500 // Internal Server Error 内部服务器错误
+	HTTP_501 int = 501 // Not Implemented 未实现
 )
 
 // 基础路由

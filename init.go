@@ -1,17 +1,17 @@
 package main
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/config"
-	"fmt"
 	"github.com/astaxie/beego/orm"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/astaxie/beego/validation"
+	_ "github.com/go-sql-driver/mysql"
 	"vuejs-blog-server/models"
 	"vuejs-blog-server/utils/learnku_filepath"
 )
 
-func init()  {
+func init() {
 	initConf()
 	initLogs()
 	initModels()
@@ -21,12 +21,13 @@ func init()  {
 // 1. 配置文件初始化
 // EnvConfig.String("")
 var EnvConfig config.Configer
-func initConf()  {
+
+func initConf() {
 	var env string = "conf/env.conf"
 	var envExample string = "conf/env.example.conf"
 
 	// 如果 evn.conf 文件不存在，就创建
-	if (!learnku_filepath.Exists(env)){
+	if !learnku_filepath.Exists(env) {
 		learnku_filepath.CopyFile(envExample, env)
 		beego.Error("文件：" + env + "创建成功，请配置它已让程序正常运行。。。")
 	}
@@ -40,7 +41,7 @@ func initConf()  {
 }
 
 // 2. 日志系统初始化
-func initLogs()  {
+func initLogs() {
 	// github.com/astaxie/beego/logs/log.go ==> line280
 	// writeMsg 方法中
 	// `_, filename := path.Split(file)` 修正为 `filename := file`
@@ -59,14 +60,14 @@ func initLogs()  {
 }
 
 // 3. 数据库初始化
-func initModels()  {
+func initModels() {
 	// 获取 env::mysql 配置信息
 	mysql := map[string]string{
 		"username": EnvConfig.String("mysql::username"),
 		"password": EnvConfig.String("mysql::password"),
-		"tcp": EnvConfig.String("mysql::tcp"),
-		"dbname": EnvConfig.String("mysql::dbname"),
-		"charset": EnvConfig.String("mysql::charset"),
+		"tcp":      EnvConfig.String("mysql::tcp"),
+		"dbname":   EnvConfig.String("mysql::dbname"),
+		"charset":  EnvConfig.String("mysql::charset"),
 	}
 
 	// set default database
@@ -92,12 +93,12 @@ func initModels()  {
 }
 
 // 3.1 在表不存在的时候会创建表
-func registeModels()  {
+func registeModels() {
 	orm.RegisterModel(new(models.Users))
 }
 
 // 4. 表单验证初始化
-func initRequest()  {
+func initRequest() {
 	validation.SetDefaultMessage(map[string]string{
 		"Required":     "不能为空",
 		"Min":          "Minimum is %d",

@@ -11,15 +11,15 @@ import (
 )
 
 type Users struct {
-	Id       int64 `pk:"auto"`
-	Name string `orm:"size(255);unique;description(用户名)"`
-	Email    string `orm:"size(255);unique;description(邮箱)"`
-	Password string `orm:"size(255);description(密码)"`
-	RememberToken string `orm:"size(100);description(记住)" json:"remember_token"`
-	Avatar   string `orm:"size(255);description(头像)"`
-	NotificationCount  int64 `orm:"default(0);description(待通知消息条数)" json:"notification_count"`
-	CreatedAt time.Time `orm:"auto_now_add;type(datetime);description(创建时间)"`
-	UpdatedAt time.Time `orm:"auto_now;type(datetime);description(更新时间)"`
+	Id                int64     `pk:"auto"`
+	Name              string    `orm:"size(255);unique;description(用户名)"`
+	Email             string    `orm:"size(255);unique;description(邮箱)"`
+	Password          string    `orm:"size(255);description(密码)"`
+	RememberToken     string    `orm:"size(100);description(记住)" json:"remember_token"`
+	Avatar            string    `orm:"size(255);description(头像)"`
+	NotificationCount int64     `orm:"default(0);description(待通知消息条数)" json:"notification_count"`
+	CreatedAt         time.Time `orm:"auto_now_add;type(datetime);description(创建时间)"`
+	UpdatedAt         time.Time `orm:"auto_now;type(datetime);description(更新时间)"`
 }
 
 // AddUsers insert a new Users into database and returns
