@@ -25,6 +25,10 @@ go run init.go
 # 配置项目环境配置文件
 配置：conf/env.conf
 
+# 迁移数据库（回到项目目录）
+bee migrate -driver=mysql -conn="dbUsername:dbPassword@tcp(127.0.0.1:3306)/vuejs_blog_server"
+注意：将 dbUsername/dbPassword 换成你自己真实的mysql用户名和密码
+
 # 运行服务器
 bee run
 
