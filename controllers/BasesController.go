@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"github.com/astaxie/beego"
+	"vuejs-blog-server/request"
+	"vuejs-blog-server/utils/learnku_json"
 )
 
 const (
@@ -21,9 +23,25 @@ const (
 	HTTP_501 int = 501 // Not Implemented 未实现
 )
 
-// 基础路由
+// @title 基础路由
 type BasesController struct {
 	beego.Controller
+}
+
+// @title 表单验证
+// @params validFn 通过传入接口来实现调用
+func (this BasesController) Validate(validFn request.User) {
+	json2Map := map[string]interface{}{}
+	b, err := learnku_json.Json2Map(this.Ctx.Input.RequestBody, &json2Map)
+	if b {
+		validErrorsData, validResult := validFn.Valid(json2Map)
+		if !validResult {
+			this.Data["json"] = this.ErrorResopnse(HTTP_200, nil, validErrorsData)
+			this.ServeJSON()
+		}
+	} else {
+		beego.Error(err)
+	}
 }
 
 // @title 201 创建操作

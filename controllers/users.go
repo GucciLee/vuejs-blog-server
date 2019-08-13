@@ -3,12 +3,10 @@ package controllers
 import (
 	"encoding/json"
 	"errors"
-	"github.com/astaxie/beego"
 	"strconv"
 	"strings"
 	"vuejs-blog-server/models"
 	"vuejs-blog-server/request"
-	"vuejs-blog-server/utils/learnku_json"
 )
 
 //  UsersController operations for Users
@@ -16,7 +14,8 @@ type UsersController struct {
 	BasesController
 }
 
-// URLMapping ...
+// 用户如果没有进行注册，那么就会通过反射来执行对应的函数，
+// 如果注册了就会通过 interface 来进行执行函数，性能上面会提升很多
 func (c *UsersController) URLMapping() {
 	c.Mapping("Post", c.Post)
 	c.Mapping("GetOne", c.GetOne)
@@ -26,18 +25,7 @@ func (c *UsersController) URLMapping() {
 }
 
 func (c *UsersController) Prepare() {
-	json2Map := map[string]interface{}{}
-	b, err := learnku_json.Json2Map(c.Ctx.Input.RequestBody, &json2Map)
-	if b {
-		valid, i := request.User{}.Valid(json2Map)
-		// 验证不通过，响应错误信息
-		if !i {
-			c.Data["json"] = c.ErrorResopnse(HTTP_200, nil, valid)
-			c.ServeJSON()
-		}
-	} else {
-		beego.Error(err)
-	}
+	c.Validate(request.User{}) // 表单验证
 }
 
 // Post ...

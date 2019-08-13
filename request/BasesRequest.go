@@ -12,11 +12,7 @@ type RequestBaseS struct{}
 
 // 表单验证 - 开始校验
 func (this RequestBaseS) Valid(data map[string]interface{}) (map[string]string, bool) {
-	valid := validation.Validation{}
-
-	// valid.Required(data["name"], "name").Message("名称不能为空")
-
-	return this.Rtn(valid)
+	return map[string]string{}, true
 }
 
 // 表单验证 - 返回错误信息

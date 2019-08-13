@@ -19,15 +19,15 @@ cd vuejs-blog-server
 go mod tidy
 
 # 项目初始化
-cd _create_product_init
+cd _create_project_init
 go run init.go
 
 # 配置项目环境配置文件
 配置：conf/env.conf
 
-# 迁移数据库（回到项目目录）
+# 迁移数据库（cd 项目目录）
 bee migrate -driver=mysql -conn="dbUsername:dbPassword@tcp(127.0.0.1:3306)/vuejs_blog_server"
-注意：将 dbUsername/dbPassword 换成你自己真实的mysql用户名和密码
+注意：将 dbUsername/dbPassword 换成你自己真实的 mysql 用户名和密码
 
 # 运行服务器
 bee run
