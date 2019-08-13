@@ -8,7 +8,6 @@ import (
 	"github.com/astaxie/beego/validation"
 	_ "github.com/go-sql-driver/mysql"
 	"vuejs-blog-server/models"
-	"vuejs-blog-server/utils/learnku_filepath"
 )
 
 func init() {
@@ -24,13 +23,6 @@ var EnvConfig config.Configer
 
 func initConf() {
 	var env string = "conf/env.conf"
-	var envExample string = "conf/env.example.conf"
-
-	// 如果 evn.conf 文件不存在，就创建
-	if !learnku_filepath.Exists(env) {
-		learnku_filepath.CopyFile(envExample, env)
-		beego.Error("文件：" + env + "创建成功，请配置它已让程序正常运行。。。")
-	}
 
 	// 读取 env 配置文件
 	var err error

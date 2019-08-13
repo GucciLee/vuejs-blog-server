@@ -12,8 +12,18 @@
 # 拉取项目
 git clone git@github.com:learnku/vuejs-blog-server.git
 
+# 进入项目
+cd vuejs-blog-server
+
 # 拉取包依赖
 go mod tidy
+
+# 项目初始化
+cd _create_product_init
+go run init.go
+
+# 配置项目环境配置文件
+配置：conf/env.conf
 
 # 运行服务器
 bee run
