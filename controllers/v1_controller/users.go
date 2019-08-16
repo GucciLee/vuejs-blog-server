@@ -1,17 +1,18 @@
-package controllers
+package v1_controller
 
 import (
 	"encoding/json"
 	"errors"
 	"strconv"
 	"strings"
+	"vuejs-blog-server/controllers"
 	"vuejs-blog-server/models"
 	"vuejs-blog-server/request"
 )
 
 //  UsersController operations for Users
 type UsersController struct {
-	BasesController
+	controllers.BasesController
 }
 
 // 用户如果没有进行注册，那么就会通过反射来执行对应的函数，
@@ -79,6 +80,8 @@ func (c *UsersController) GetOne() {
 // @Failure 403
 // @router / [get]
 func (c *UsersController) GetAll() {
+	c.Ctx.WriteString("sdsdsd")
+	return
 	var fields []string
 	var sortby []string
 	var order []string

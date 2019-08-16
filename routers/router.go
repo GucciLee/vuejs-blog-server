@@ -8,15 +8,37 @@
 package routers
 
 import (
-	"vuejs-blog-server/controllers"
-
 	"github.com/astaxie/beego"
+	"strings"
+	v1 "vuejs-blog-server/controllers/v1_controller"
 )
 
 func init() {
-	ns := beego.NewNamespace("/v1",
-		// 路由测试
-		beego.NSNamespace("/users", beego.NSInclude(&controllers.UsersController{})),
-	)
-	beego.AddNamespace(ns)
+	Restfull("/v1/test", &v1.DemosController{}, nil)
+}
+
+func Restfull(rootpath string, c beego.ControllerInterface, methods []string)  {
+	if len(methods) <= 0 {
+		methods = []string{"Index", "Create", "Store", "Show", "Edit", "Update", "Destroy"}
+	}
+	for _, v := range methods{
+		switch strings.ToLower(v) {
+		case "index":
+			beego.Router(rootpath + "/", c, "get:Index")
+		case "create":
+			beego.Router(rootpath + "/create", c, "get:Create")
+		case "store":
+			beego.Router(rootpath + "/:id", c, "post:Store")
+		case "show":
+			beego.Router(rootpath + "/:id", c, "get:Show")
+		case "edit":
+			beego.Router(rootpath + "/:id/edit", c, "get:Edit")
+		case "update":
+			beego.Router(rootpath + "/:id", c, "put,patch:Update")
+		case "destroy":
+			beego.Router(rootpath + "/:id", c, "delete:Destroy")
+		default:
+			beego.Router(rootpath + "/", c, "get:Index")
+		}
+	}
 }
