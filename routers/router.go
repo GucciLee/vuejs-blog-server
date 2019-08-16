@@ -28,7 +28,7 @@ func Restfull(rootpath string, c beego.ControllerInterface, methods []string)  {
 		case "create":
 			beego.Router(rootpath + "/create", c, "get:Create")
 		case "store":
-			beego.Router(rootpath + "/:id", c, "post:Store")
+			beego.Router(rootpath + "/", c, "post:Store")
 		case "show":
 			beego.Router(rootpath + "/:id", c, "get:Show")
 		case "edit":

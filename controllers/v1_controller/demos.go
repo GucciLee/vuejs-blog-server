@@ -1,15 +1,12 @@
 package v1_controller
 
-import "vuejs-blog-server/controllers"
+import (
+	"vuejs-blog-server/controllers"
+)
 
 // DemosController operations for Demos
 type DemosController struct {
 	controllers.BasesController
-}
-
-// URLMapping ...
-func (c *DemosController) URLMapping() {
-	// c.Mapping("Index", c.Index)
 }
 
 func (c *DemosController) Index() {
@@ -21,7 +18,11 @@ func (c *DemosController) Create() {
 }
 
 func (c *DemosController) Store() {
-	c.Ctx.WriteString("Store")
+	c.Data["json"] = map[string]interface{}{
+		"valid": false,
+		"message": "该邮箱已经存在",
+	}
+	c.ServeJSON()
 }
 
 func (c *DemosController) Show() {
