@@ -5,11 +5,16 @@ import (
 	"strconv"
 	"vuejs-blog-server/controllers"
 	"vuejs-blog-server/models"
+	"vuejs-blog-server/request"
 )
 
 // 产品列表页
 type UsersController struct {
 	controllers.BasesController
+}
+
+func (this *UsersController) Prepare() {
+	this.Validate(request.User{})
 }
 
 // 用户列表

@@ -32,9 +32,19 @@ func (m *Users) TableEngine() string {
 	return "INNODB"
 }
 
+// 用户是否存在
+func ExistsUserName(name interface{}) bool {
+	o := orm.NewOrm()
+	return o.QueryTable(new(Users)).Filter("Name", name).Exist()
+}
 
-// AddUsers insert a new Users into database and returns
-// last inserted Id on success.
+// 邮箱是否存在
+func ExistsUserEmail(email interface{}) bool {
+	o := orm.NewOrm()
+	return o.QueryTable(new(Users)).Filter("Email", email).Exist()
+}
+
+// 添加用户
 func AddUsers(m *Users) (id int64, err error) {
 	o := orm.NewOrm()
 	id, err = o.Insert(m)
