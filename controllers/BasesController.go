@@ -2,8 +2,10 @@ package controllers
 
 import (
 	"errors"
+	"fmt"
 	"github.com/astaxie/beego"
 	"strings"
+	"vuejs-blog-server/models"
 	"vuejs-blog-server/request"
 	"vuejs-blog-server/utils/learnku_json"
 )
@@ -23,11 +25,29 @@ const (
 	HTTP_405 int = 405 // Method Not Allowed 方法不允许
 	HTTP_500 int = 500 // Internal Server Error 内部服务器错误
 	HTTP_501 int = 501 // Not Implemented 未实现
+	SESSION_USER_KEY string = "liguanjie_session_keys"
 )
 
 // @title 基础路由
 type BasesController struct {
 	beego.Controller
+	IsLogin bool		// 用户是否登录
+	User models.Users	// 登录的用户
+}
+
+// c.SetSession(SESSION_USER_KEY, user)
+func (this *BasesController) Prepare() {
+	this.IsLogin = false
+	tu := this.GetSession(SESSION_USER_KEY)
+	fmt.Println(tu)
+	/*if tu != nil {
+		if u, ok := tu.(models.Users); ok {
+			this.User = u
+			this.Data["User"] = u
+			this.IsLogin = true
+		}
+	}
+	this.Data["IsLogin"] = this.IsLogin*/
 }
 
 // @title 表单验证

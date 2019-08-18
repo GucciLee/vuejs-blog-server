@@ -14,6 +14,7 @@ import (
 )
 
 func init() {
+	beego.Router("/v1/login", &v1.UsersController{}, "post:Login")
 	Restfull("/v1/users", &v1.UsersController{}, nil)
 }
 

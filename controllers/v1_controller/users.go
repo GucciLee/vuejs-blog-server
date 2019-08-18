@@ -5,7 +5,6 @@ import (
 	"strconv"
 	"vuejs-blog-server/controllers"
 	"vuejs-blog-server/models"
-	"vuejs-blog-server/request"
 )
 
 // 产品列表页
@@ -13,9 +12,9 @@ type UsersController struct {
 	controllers.BasesController
 }
 
-func (this *UsersController) Prepare() {
+/*func (this *UsersController) Prepare() {
 	this.Validate(request.User{})
-}
+}*/
 
 // 用户列表
 func (this *UsersController) Index() {
@@ -92,4 +91,14 @@ func (this *UsersController) Destroy() {
 	} else {
 		this.Data["json"] = this.SuccessResopnse(200, nil, "删除成功")
 	}
+}
+
+// 登录
+func (this *UsersController) Login()  {
+	// 检测邮箱和密码是否匹配
+	// v, _ := models.GetUsersById(1)
+	// this.SetSession(controllers.SESSION_USER_KEY, v)
+	// session := this.GetSession(controllers.SESSION_USER_KEY).(string)
+	// this.Ctx.WriteString(session)
+	this.Ctx.WriteString("登录成功")
 }
