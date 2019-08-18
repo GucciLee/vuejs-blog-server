@@ -28,12 +28,12 @@ func (this *UsersController) Index() {
 	this.ServeJSON()
 }
 
-// 创建用户
+// 创建用户【注册】
 func (this *UsersController) Create() {
 	this.Ctx.WriteString("Create")
 }
 
-// 保存用户
+// 保存用户【注册】
 func (this *UsersController) Store() {
 	var m models.Users
 
