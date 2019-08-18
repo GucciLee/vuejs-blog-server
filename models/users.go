@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego/orm"
-	"time"
 )
 
 type Users struct {
@@ -22,11 +22,22 @@ type Users struct {
 	UpdatedAt         time.Time `orm:"auto_now;type(datetime);description(更新时间)"`
 }
 
+func init() {
+	// orm.RegisterModel(new(Users))
+}
+
+
+// 设置引擎为 INNODB
+func (m *Users) TableEngine() string {
+	return "INNODB"
+}
+
+
 // AddUsers insert a new Users into database and returns
 // last inserted Id on success.
 func AddUsers(m *Users) (id int64, err error) {
-	//o := orm.NewOrm()
-	//id, err = o.Insert(m)
+	o := orm.NewOrm()
+	id, err = o.Insert(m)
 	return
 }
 

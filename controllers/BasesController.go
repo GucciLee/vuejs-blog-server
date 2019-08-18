@@ -30,11 +30,12 @@ type BasesController struct {
 
 // @title 表单验证
 // @params validFn 通过传入接口来实现调用
-func (this BasesController) Validate(validFn request.User) {
+func (this BasesController) Validate(validFn request.RequestBaseI) {
+	method := this.Ctx.Request.Method
 	json2Map := map[string]interface{}{}
 	b, err := learnku_json.Json2Map(this.Ctx.Input.RequestBody, &json2Map)
 	if b {
-		validErrorsData, validResult := validFn.Valid(json2Map)
+		validErrorsData, validResult := validFn.Valid(method, json2Map)
 		if !validResult {
 			this.Data["json"] = this.ErrorResopnse(HTTP_200, nil, validErrorsData)
 			this.ServeJSON()

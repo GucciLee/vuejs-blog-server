@@ -14,7 +14,7 @@ import (
 )
 
 func init() {
-	Restfull("/v1/test", &v1.DemosController{}, nil)
+	Restfull("/v1/users", &v1.UsersController{}, nil)
 }
 
 func Restfull(rootpath string, c beego.ControllerInterface, methods []string)  {
