@@ -11,15 +11,15 @@ import (
 )
 
 type Users struct {
-	Id                int64     `pk:"auto"`
-	Name              string    `orm:"size(255);unique;description(用户名)"`
-	Email             string    `orm:"size(255);unique;description(邮箱)"`
-	Password          string    `orm:"size(255);description(密码)"`
+	Id                int64     `pk:"auto" json:"id"`
+	Name              string    `orm:"size(255);unique;description(用户名)" json:"name"`
+	Email             string    `orm:"size(255);unique;description(邮箱)" json:"email"`
+	Password          string    `orm:"size(255);description(密码)" json:"password"`
 	RememberToken     string    `orm:"size(100);description(记住)" json:"remember_token"`
-	Avatar            string    `orm:"size(255);description(头像)"`
+	Avatar            string    `orm:"size(255);description(头像)" json:"avatar"`
 	NotificationCount int64     `orm:"default(0);description(待通知消息条数)" json:"notification_count"`
-	CreatedAt         time.Time `orm:"auto_now_add;type(datetime);description(创建时间)"`
-	UpdatedAt         time.Time `orm:"auto_now;type(datetime);description(更新时间)"`
+	CreatedAt         time.Time `orm:"auto_now_add;type(datetime);description(创建时间)" json:"created_at"`
+	UpdatedAt         time.Time `orm:"auto_now;type(datetime);description(更新时间)" json:"updated_at"`
 }
 
 func init() {
@@ -76,7 +76,7 @@ func GetAllUsers(query map[string]string, fields []string, sortby []string, orde
 				} else if order[i] == "asc" {
 					orderby = v
 				} else {
-					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
+					return nil, errors.New("Error: Invalid order. 必须是 [asc|desc]")
 				}
 				sortFields = append(sortFields, orderby)
 			}
@@ -90,7 +90,7 @@ func GetAllUsers(query map[string]string, fields []string, sortby []string, orde
 				} else if order[0] == "asc" {
 					orderby = v
 				} else {
-					return nil, errors.New("Error: Invalid order. Must be either [asc|desc]")
+					return nil, errors.New("Error: Invalid order. 必须是 [asc|desc]")
 				}
 				sortFields = append(sortFields, orderby)
 			}
@@ -99,7 +99,7 @@ func GetAllUsers(query map[string]string, fields []string, sortby []string, orde
 		}
 	} else {
 		if len(order) != 0 {
-			return nil, errors.New("Error: unused 'order' fields")
+			return nil, errors.New("Error: 未使用 'order' 字段")
 		}
 	}
 
@@ -135,7 +135,7 @@ func UpdateUsersById(m *Users) (err error) {
 	if err = o.Read(&v); err == nil {
 		var num int64
 		if num, err = o.Update(m); err == nil {
-			fmt.Println("Number of records updated in database:", num)
+			fmt.Println("数据库中更新的记录数：", num)
 		}
 	}
 	return
@@ -150,7 +150,7 @@ func DeleteUsers(id int64) (err error) {
 	if err = o.Read(&v); err == nil {
 		var num int64
 		if num, err = o.Delete(&Users{Id: id}); err == nil {
-			fmt.Println("Number of records deleted in database:", num)
+			fmt.Println("数据库中删除的记录数：", num)
 		}
 	}
 	return

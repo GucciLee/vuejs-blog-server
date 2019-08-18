@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"errors"
 	"github.com/astaxie/beego"
+	"strings"
 	"vuejs-blog-server/request"
 	"vuejs-blog-server/utils/learnku_json"
 )
@@ -43,6 +45,51 @@ func (this BasesController) Validate(validFn request.RequestBaseI) {
 	} else {
 		beego.Error(err)
 	}
+}
+
+// @title 过滤请求参数
+func (this BasesController) FileterParams() (map[string]string, []string, []string, []string, int64, int64) {
+	var fields []string
+	var sortby []string
+	var order []string
+	var query = make(map[string]string)
+	var limit int64 = 10
+	var offset int64
+	// fields: col1,col2,entity.col3
+	if v := this.GetString("fields"); v != "" {
+		fields = strings.Split(v, ",")
+	}
+	// limit: 10 (default is 10)
+	if v, err := this.GetInt64("limit"); err == nil {
+		limit = v
+	}
+	// offset: 0 (default is 0)
+	if v, err := this.GetInt64("offset"); err == nil {
+		offset = v
+	}
+	// sortby: col1,col2
+	if v := this.GetString("sortby"); v != "" {
+		sortby = strings.Split(v, ",")
+	}
+	// order: desc,asc
+	if v := this.GetString("order"); v != "" {
+		order = strings.Split(v, ",")
+	}
+	// query: k:v,k:v
+	// where k = v
+	if v := this.GetString("query"); v != "" {
+		for _, cond := range strings.Split(v, ",") {
+			kv := strings.SplitN(cond, ":", 2)
+			if len(kv) != 2 {
+				this.Data["json"] = errors.New("Error: 无效的查询键/值对")
+				this.ServeJSON()
+				return query, fields, sortby, order, offset, limit
+			}
+			k, v := kv[0], kv[1]
+			query[k] = v
+		}
+	}
+	return query, fields, sortby, order, offset, limit
 }
 
 // @title 201 创建操作

@@ -75,12 +75,12 @@ func initModels() {
 	// @params name default 代表mysql数据库
 	// @params force 强制创建表
 	// @params verbose 打印更多信息
-	orm.RunSyncdb("default", true, true)
+	orm.RunSyncdb("default", false, true)
 
 	// 调试模式
 	if beego.BConfig.RunMode == "dev" {
 		// 打印查询语句
-		// orm.Debug = true
+		orm.Debug = true
 	}
 }
 

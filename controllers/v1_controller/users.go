@@ -1,8 +1,8 @@
 package v1_controller
 
 import (
-	"errors"
-	"strings"
+	"encoding/json"
+	"strconv"
 	"vuejs-blog-server/controllers"
 	"vuejs-blog-server/models"
 )
@@ -12,80 +12,79 @@ type UsersController struct {
 	controllers.BasesController
 }
 
-func (c *UsersController) Index() {
-	var fields []string
-	var sortby []string
-	var order []string
-	var query = make(map[string]string)
-	var limit int64 = 10
-	var offset int64
+// 用户列表
+func (this *UsersController) Index() {
+	l, err := models.GetAllUsers(this.FileterParams())
+	if err != nil {
+		this.Data["json"] = err.Error()
+	} else {
+		this.Data["json"] = l
+	}
+	this.ServeJSON()
+}
 
-	// fields: col1,col2,entity.col3
-	if v := c.GetString("fields"); v != "" {
-		fields = strings.Split(v, ",")
-	}
-	// limit: 10 (default is 10)
-	if v, err := c.GetInt64("limit"); err == nil {
-		limit = v
-	}
-	// offset: 0 (default is 0)
-	if v, err := c.GetInt64("offset"); err == nil {
-		offset = v
-	}
-	// sortby: col1,col2
-	if v := c.GetString("sortby"); v != "" {
-		sortby = strings.Split(v, ",")
-	}
-	// order: desc,asc
-	if v := c.GetString("order"); v != "" {
-		order = strings.Split(v, ",")
-	}
-	// query: k:v,k:v
-	if v := c.GetString("query"); v != "" {
-		for _, cond := range strings.Split(v, ",") {
-			kv := strings.SplitN(cond, ":", 2)
-			if len(kv) != 2 {
-				c.Data["json"] = errors.New("Error: invalid query key/value pair")
-				c.ServeJSON()
-				return
-			}
-			k, v := kv[0], kv[1]
-			query[k] = v
+// 创建用户
+func (this *UsersController) Create() {
+	this.Ctx.WriteString("Create")
+}
+
+// 保存用户
+func (this *UsersController) Store() {
+	var m models.Users
+
+	err := json.Unmarshal(this.Ctx.Input.RequestBody, &m)
+	if err != nil {
+		this.Data["json"] = this.ErrorResopnse(500, nil, err)
+	} else {
+		if _, err := models.AddUsers(&m); err != nil {
+			this.Data["json"] = this.ErrorResopnse(500, nil, err)
+		} else {
+			this.Ctx.Output.SetStatus(201)
+			this.Data["json"] = this.CreatedResopnse("用户创建成功")
 		}
 	}
-
-	l, err := models.GetAllUsers(query, fields, sortby, order, offset, limit)
-	if err != nil {
-		c.Data["json"] = err.Error()
-	} else {
-		c.Data["json"] = l
-	}
-	c.ServeJSON()
+	this.ServeJSON()
 }
 
-func (this *UsersController) Create() {
-	this.Ctx.WriteString("Create - 创建 - 展示")
-}
-
-func (this *UsersController) Store() {
-	this.Ctx.WriteString("Store")
-}
-
-
+// 用户详情
 func (this *UsersController) Show() {
-	this.Ctx.WriteString("Show")
+	idStr := this.Ctx.Input.Param(":id")
+	id, _ := strconv.ParseInt(idStr, 0, 64)
+	user, err := models.GetUsersById(id)
+	if err != nil {
+		this.Data["json"] = this.ErrorResopnse(500, nil, err)
+	} else {
+		this.Data["json"] = this.SuccessResopnse(user, 200, nil)
+	}
+	this.ServeJSON()
 }
 
-
+// 编辑用户资料
 func (this *UsersController) Edit() {
-	this.Ctx.WriteString("Edit")
+	this.Show()
 }
 
-
+// 更新用户资料
 func (this *UsersController) Update() {
-	this.Ctx.WriteString("Update")
+	idStr := this.Ctx.Input.Param(":id")
+	id, _ := strconv.ParseInt(idStr, 0, 64)
+	m := models.Users{
+		Id: id,
+	}
+	if err := models.UpdateUsersById(&m); err != nil {
+		this.Data["json"] = this.ErrorResopnse(500, nil, err)
+	} else {
+		this.Data["json"] = this.SuccessResopnse(200, nil, "资料更新成功")
+	}
 }
 
+// 删除用户
 func (this *UsersController) Destroy() {
-	this.Ctx.WriteString("Destroy")
+	idStr := this.Ctx.Input.Param(":id")
+	id, _ := strconv.ParseInt(idStr, 0, 64)
+	if err := models.DeleteUsers(id); err != nil {
+		this.Data["json"] = this.ErrorResopnse(500, nil, err)
+	} else {
+		this.Data["json"] = this.SuccessResopnse(200, nil, "删除成功")
+	}
 }
